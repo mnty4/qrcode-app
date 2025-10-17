@@ -3,6 +3,7 @@ import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
 import {getQRCodes} from "../models/QRCode.server.js";
 import PropTypes from 'prop-types';
+import {truncate} from "../utils.js";
 
 
 export async function loader({ request }) {
@@ -62,13 +63,6 @@ const QRTable = ({ qrCodes }) => (
     </s-table>
   </s-section>
 );
-QRTable.propTypes = {
-  qrCodes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    })
-  ).isRequired
-};
 
 const QRTableRow = ({ qrCode }) => (
   <s-table-row id={qrCode.id} position={qrCode.id}>
@@ -107,9 +101,7 @@ const QRTableRow = ({ qrCode }) => (
     <s-table-cell>{qrCode.scans}</s-table-cell>
   </s-table-row>
 );
-QRTableRow.propTypes = {
-  qrCode: PropTypes.object.isRequired,
-};
+
 
 export default function Index() {
   const { qrCodes } = useLoaderData();
